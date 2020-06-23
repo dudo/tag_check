@@ -1,0 +1,16 @@
+on:
+  pull_request:
+    branches:
+      - master
+name: Check Version
+jobs:
+  check_version:
+    name: Check Version
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2 # https://github.com/actions/checkout
+      - uses: dudo/tag_check@v1
+        with:
+          git_tag_prefix: v

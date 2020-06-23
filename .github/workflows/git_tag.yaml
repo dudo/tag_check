@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - master
+name: Git Tag
+jobs:
+  tag_check:
+    name: Tag Check
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      POST_API_URL: "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
+    steps:
+      - uses: actions/checkout@v2 # https://github.com/actions/checkout
+      - uses: dudo/tag_check@v1
+        with:
+          git_tag_prefix: v
+      - name: Push Tag to GitHub
+        run: |
+          curl -s -X POST $POST_API_URL \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -d @- << EOS
+          {
+            "ref": "refs/tags/${GIT_TAG_NAME}",
+            "sha": "${GITHUB_SHA}"
+          }
+          EOS
