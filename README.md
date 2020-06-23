@@ -28,20 +28,20 @@ name: Git Tag
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
-  tag_check:
-    name: Tag Check
+  check_version:
+    name: Check Version
     runs-on: ubuntu-latest
     outputs:
-      git_tag_name: ${{ steps.check_tag.outputs.git_tag_name }}
+      git_tag_name: ${{ steps.tag_check.outputs.git_tag_name }}
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
       - uses: dudo/tag_check@v1
-        id: check_tag
+        id: tag_check
         with:
           git_tag_prefix: v
   push_tag:
     name: Push Tag
-    needs: tag_check
+    needs: check_version
     runs-on: ubuntu-latest
     steps:
     - name: Push Tag to GitHub
