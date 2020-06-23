@@ -20,6 +20,7 @@ jobs:
         uses: ./
   push_tag:
     name: Push Tag
+    needs: tag_check
     runs-on: ubuntu-latest
     env:
       POST_API_URL: "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
