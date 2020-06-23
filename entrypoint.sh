@@ -25,6 +25,7 @@ else
   exit 1
 fi
 GIT_TAG_NAME=${INPUT_GIT_TAG_PREFIX}${VERSION}
+echo "::set-output name=git_tag_name::${GIT_TAG_NAME}"
 echo "Tag detected: ${GIT_TAG_NAME}"
 
 # Check tag on GitHub

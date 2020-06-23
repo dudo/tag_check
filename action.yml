@@ -9,16 +9,19 @@ inputs:
     description: Declare this variable if you don't want the version inferred.
     required: false
   INPUT_GIT_TAG_PREFIX:
-    description: What to use in front of your version? eg. v, ver
+    description: What to use in front of your version? eg. v, ver.
     required: false
   GITHUB_REPOSITORY:
     description: user_or_organization/repo
     required: true
-    default: This is provided by GitHub during events
+    default: This is provided by GitHub during events.
   GITHUB_TOKEN:
-    description: GitHub token
+    description: GitHub token.
     required: true
-    default: This is provided by GitHub during events
+    default: This is provided by GitHub during events.
 runs:
   using: docker
   image: Dockerfile
+outputs:
+  git_tag_name:
+    description: The detected tag name.
