@@ -25,7 +25,11 @@ jobs:
     steps:
     - name: Push Tag to GitHub
       run: |
-        echo '{"ref": "refs/tags/${{needs.tag_check.outputs.git_tag_name}}", "sha": "${GITHUB_SHA}"}'
         curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
-        -d '{"ref": "refs/tags/${{needs.tag_check.outputs.git_tag_name}}", "sha": "${GITHUB_SHA}"}' \
+        -d @- << EOS
+        {
+          "ref": "refs/tags/${{needs.tag_check.outputs.git_tag_name}}",
+          "sha": "$GITHUB_SHA"
+        }
+        EOS
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
