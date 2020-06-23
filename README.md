@@ -35,7 +35,7 @@ jobs:
       git_tag_name: ${{ steps.tag_check.outputs.git_tag_name }}
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - uses: dudo/tag_check@v1
+      - uses: dudo/tag_check@v1.0.0
         id: tag_check
         with:
           git_tag_prefix: v
@@ -69,7 +69,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - uses: dudo/tag_check@v1
+      - uses: dudo/tag_check@v1.0.0
         with:
           git_tag_prefix: v
 ```
