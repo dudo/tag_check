@@ -12,7 +12,5 @@ jobs:
       INPUT_GIT_TAG_PREFIX: v
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - name: Build docker image
-        run: docker build -t local .
-      - name: Run image
-        run: docker run -e INPUT_GIT_TAG_PREFIX -e GITHUB_TOKEN -e GITHUB_REPOSITORY local
+      - name: Tag check
+        uses: ./

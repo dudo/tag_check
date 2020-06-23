@@ -15,11 +15,9 @@ jobs:
       INPUT_GIT_TAG_PREFIX: v
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - name: Build docker image
-        run: docker build -t local .
       - name: Tag check
         id: check_tag
-        run: docker run -e INPUT_GIT_TAG_PREFIX -e GITHUB_TOKEN -e GITHUB_REPOSITORY local
+        uses: ./
   push_tag:
     name: Push Tag
     runs-on: ubuntu-latest
@@ -28,6 +26,7 @@ jobs:
     steps:
     - name: Push Tag to GitHub
       run: |
+        echo "refs/tags/${{needs.tag_check.outputs.git_tag_name}}"
         curl -s -X POST ${POST_API_URL} \
           -H "Authorization: token ${GITHUB_TOKEN}" \
           -d @- << EOS
