@@ -11,7 +11,7 @@ then
 elif [ -f  ./lib/*/version.rb ]
 then
   # VERSION = '0.1.0'
-  VERSION=$(cat ./lib/*/version.rb | grep -oP "(?<=VERSION).*" | cut -d \' -f2 | cut -d \" -f2 &&
+  VERSION=$(cat ./lib/*/version.rb | grep -oP "(?<=VERSION).*" | cut -d \' -f2 | cut -d \" -f2) &&
     echo "Ruby detected..."
 elif [ -f ./Dockerfile ]
 then
@@ -35,14 +35,16 @@ HTTP_STATUS_CODE=$(curl -LI $GET_API_URL -o /dev/null -w '%{http_code}\n' -s \
 echo "GitHub returned with a ${HTTP_STATUS_CODE}."
 
 # Exit if tag exists
-if [ "$HTTP_STATUS_CODE" -e "404" ]
+if [ "$HTTP_STATUS_CODE" = "404" ]
 then
-  echo "Tag does NOT exist. You may continue!"
-elif [ "$HTTP_STATUS_CODE" -e "200" ]
+  echo "Remote tag does NOT exist. You may continue!"
+elif [ "$HTTP_STATUS_CODE" = "200" ]
 then
-  echo "Tag already exists.\nExiting."
+  echo "Remote tag already exists."
+  echo "Exiting."
   exit 1
 else
-  echo "Tag unable to be determined.\nExiting."
+  echo "Remote tag unable to be determined."
+  echo "Exiting."
   exit 1
 fi

@@ -8,13 +8,15 @@ jobs:
     name: Tag Check
     runs-on: ubuntu-latest
     env:
+      INPUT_GIT_TAG_PREFIX: v
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       POST_API_URL: "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - uses: dudo/tag_check@v1
-        with:
-          git_tag_prefix: v
+      - name: Build docker image
+        run: docker build -t local .
+      - name: Run image
+        run: docker run -e INPUT_GIT_TAG_PREFIX -e GITHUB_TOKEN -e GITHUB_REPOSITORY local
       - name: Push Tag to GitHub
         run: |
           curl -s -X POST $POST_API_URL \
