@@ -22,11 +22,9 @@ jobs:
     name: Push Tag
     needs: tag_check
     runs-on: ubuntu-latest
-    env:
-      POST_API_URL: "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
     steps:
     - name: Push Tag to GitHub
       run: |
         curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
         -d '{"ref": "refs/tags/${{needs.tag_check.outputs.git_tag_name}}", "sha": "${GITHUB_SHA}"}' \
-        ${POST_API_URL}
+        ${https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs}
