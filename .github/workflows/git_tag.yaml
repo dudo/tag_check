@@ -31,5 +31,5 @@ jobs:
           "ref": "refs/tags/${{needs.tag_check.outputs.git_tag_name}}",
           "sha": "$GITHUB_SHA"
         }
-        EOS
+        EOS \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
