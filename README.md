@@ -25,33 +25,37 @@ on:
     branches:
       - master
 name: Git Tag
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   tag_check:
     name: Tag Check
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      POST_API_URL: "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
+    outputs:
+      git_tag_name: ${{ steps.check_tag.outputs.git_tag_name }}
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
       - uses: dudo/tag_check@v1
+        id: check_tag
         with:
           git_tag_prefix: v
-      - name: Push Tag to GitHub
-        run: |
-          curl -s -X POST $POST_API_URL \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
-            -d @- << EOS
-          {
-            "ref": "refs/tags/${GIT_TAG_NAME}",
-            "sha": "${GITHUB_SHA}"
-          }
-          EOS
+  push_tag:
+    name: Push Tag
+    needs: tag_check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Push Tag to GitHub
+      run: |
+        curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
+        -d "{\"ref\": \"refs/tags/${{needs.tag_check.outputs.git_tag_name}}\", \"sha\": \"${GITHUB_SHA}\"}" \
+        "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
 ```
 
 Or when you want to ensure you updated your version file.
 
 ```yaml
+# .github/workflows/check_tag.yaml
+
 on:
   pull_request:
     branches:

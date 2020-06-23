@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       git_tag_name: ${{ steps.check_tag.outputs.git_tag_name }}
-    env:
-      INPUT_GIT_TAG_PREFIX: v
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
       - name: Tag check
         id: check_tag
         uses: ./
+        with:
+          git_tag_prefix: v
   push_tag:
     name: Push Tag
     needs: tag_check

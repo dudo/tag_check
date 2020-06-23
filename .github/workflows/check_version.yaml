@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      INPUT_GIT_TAG_PREFIX: v
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
       - name: Tag check
         uses: ./
+        with:
+          git_tag_prefix: v
