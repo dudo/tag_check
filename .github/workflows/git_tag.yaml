@@ -19,6 +19,8 @@ jobs:
         run: docker run -e INPUT_GIT_TAG_PREFIX -e GITHUB_TOKEN -e GITHUB_REPOSITORY local
       - name: Push Tag to GitHub
         run: |
+          echo $GIT_TAG_NAME
+          echo $POST_API_URL
           curl -s -X POST ${POST_API_URL} \
             -H "Authorization: token ${GITHUB_TOKEN}" \
             -d @- << EOS
