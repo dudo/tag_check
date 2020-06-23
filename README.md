@@ -47,7 +47,7 @@ jobs:
     - name: Push Tag to GitHub
       run: |
         curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
-        -d "{\"ref\": \"refs/tags/${{needs.tag_check.outputs.git_tag_name}}\", \"sha\": \"${GITHUB_SHA}\"}" \
+        -d "{\"ref\": \"refs/tags/${{needs.check_version.outputs.git_tag_name}}\", \"sha\": \"${GITHUB_SHA}\"}" \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
 ```
 

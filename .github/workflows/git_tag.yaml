@@ -6,25 +6,25 @@ name: Git Tag
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
-  tag_check:
-    name: Tag Check
+  check_version:
+    name: Check Version
     runs-on: ubuntu-latest
     outputs:
       git_tag_name: ${{ steps.check_tag.outputs.git_tag_name }}
     steps:
       - uses: actions/checkout@v2 # https://github.com/actions/checkout
-      - name: Tag check
+      - name: Check Tag
         id: check_tag
         uses: ./
         with:
           git_tag_prefix: v
   push_tag:
     name: Push Tag
-    needs: tag_check
+    needs: check_version
     runs-on: ubuntu-latest
     steps:
     - name: Push Tag to GitHub
       run: |
         curl -s -H "Authorization: token ${GITHUB_TOKEN}" \
-        -d "{\"ref\": \"refs/tags/${{needs.tag_check.outputs.git_tag_name}}\", \"sha\": \"${GITHUB_SHA}\"}" \
+        -d "{\"ref\": \"refs/tags/${{needs.check_version.outputs.git_tag_name}}\", \"sha\": \"${GITHUB_SHA}\"}" \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs"
