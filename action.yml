@@ -5,10 +5,10 @@ branding:
   color: blue
 author: dudo
 inputs:
-  INPUT_VERSION:
+  version:
     description: Declare this variable if you don't want the version inferred.
     required: false
-  INPUT_GIT_TAG_PREFIX:
+  git_tag_prefix:
     description: What to use in front of your version? eg. v, ver.
     required: false
   GITHUB_REPOSITORY:
