@@ -4,8 +4,10 @@
 
 This currently looks for versions in the following files:
 
+- pyproject.yoml
 - package.json
 - ./lib/*/version.rb
+- Dockerfile
 
 ## Usage
 
