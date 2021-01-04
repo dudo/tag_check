@@ -1,6 +1,6 @@
 FROM bash
 
-LABEL version="1.0.2"
+LABEL version="1.1.0"
 
 RUN apk --no-cache add jq curl grep
 
