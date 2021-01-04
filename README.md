@@ -4,7 +4,7 @@
 
 This currently looks for versions in the following files:
 
-- pyproject.yoml
+- pyproject.toml
 - package.json
 - ./lib/*/version.rb
 - Dockerfile
