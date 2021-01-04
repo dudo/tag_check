@@ -5,7 +5,8 @@ then
     echo "INPUT_VERSION detected..."
 elif [ -f ./pyproject.toml]
 then
-  VERSION=$(cat pyproject.toml | grep -oP "(?<=^version).*" | cut -d \' -f2 | cut -d \" -f2)
+  VERSION=$(cat pyproject.toml | grep -oP "(?<=^version).*" | cut -d \' -f2 | cut -d \" -f2) &&
+    echo "Python detected..."
 elif [ -f ./package.json ]
 then
   # "version": "0.1.0"
