@@ -3,7 +3,7 @@ if [ -n "$INPUT_VERSION" ]
 then
   VERSION=$INPUT_VERSION &&
     echo "INPUT_VERSION detected..."
-elif [ -f ./pyproject.toml]
+elif [ -f ./pyproject.toml ]
 then
   VERSION=$(cat pyproject.toml | grep -oP "(?<=^version).*" | cut -d \' -f2 | cut -d \" -f2) &&
     echo "Python detected..."
